@@ -37,7 +37,7 @@ models/            serialized trained model artifacts (gitignored)
 - [x] `01_eda.ipynb` — exploratory analysis, feature engineering, leakage check on `grade_tier`
 - [x] `02_sql_layer.ipynb` — load cleaned data into SQLite, query layer (`src/database.py`)
 - [x] `03_preprocessing.ipynb` — encoding, scaling, train/test split
-- [ ] `04_feature_engineering.ipynb`
+- [x] `04_feature_engineering.ipynb`
 - [ ] `05_training.ipynb` — regression + classification models, SMOTE for imbalance
 - [ ] `06_explainability.ipynb` — SHAP
 - [ ] FastAPI service
