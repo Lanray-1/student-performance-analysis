@@ -13,3 +13,4 @@ uvicorn
 streamlit
 shap
 pytest
+shap
