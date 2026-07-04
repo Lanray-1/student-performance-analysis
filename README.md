@@ -37,12 +37,26 @@ models/            serialized trained model artifacts (gitignored)
 - [x] `01_eda.ipynb` — exploratory analysis, feature engineering, leakage check on `grade_tier`
 - [x] `02_sql_layer.ipynb` — load cleaned data into SQLite, query layer (`src/database.py`)
 - [x] `03_preprocessing.ipynb` — encoding, scaling, train/test split
-- [x] `04_feature_engineering.ipynb`
-- [ ] `05_training.ipynb` — regression + classification models, SMOTE for imbalance
-- [ ] `06_explainability.ipynb` — SHAP
+- [x] `04_feature_engineering.ipynb` — VIF, RF importance, feature selection review
+- [x] `05_training.ipynb` — regression + classification models, SMOTE for imbalance
+- [x] `06_model_diagnostics.ipynb` — residuals, CV, ablation, model selection
+- [x] `07_explainability.ipynb` — SHAP
 - [ ] FastAPI service
 - [ ] Streamlit dashboard
 - [ ] Docker + CI/CD
+
+## Known limitations
+
+**`dropout_risk` is a near-deterministic synthetic rule, not realistic behavioral data.** A depth-2 decision tree achieves perfect classification (100% accuracy/precision/recall/ROC-AUC) on held-out test data using only two features:
+
+```
+stress_level > 1.56 SD above mean  AND  motivation_level < 0.69 SD below mean  →  dropout = 1
+(every other combination → dropout = 0)
+```
+
+XGBoost's perfect scores in `05_training.ipynb` reflect this dataset property, not a breakthrough model — there's no genuine generalization challenge in this target. Reported transparently rather than presented as a result.
+
+**`exam_score` is dominated almost entirely by `previous_gpa`.** A naive single-feature linear baseline (`previous_gpa` only) achieves RMSE 4.155 / R² 0.870 — XGBoost on the full 56-feature set actually performs *worse* (RMSE 4.301 / R² 0.860), and a full linear model on all features performs nearly identically to the naive baseline (RMSE 4.157 vs 4.155) — no formal significance test was run to confirm this difference is not meaningful. The engineered behavioral features (study habits, wellness, distraction) contribute negligible incremental signal over prior academic performance in this dataset.
 
 ## Setup
 
