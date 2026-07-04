@@ -11,3 +11,4 @@ models/*.pkl
 models/*.joblib
 .DS_Store
 data/processed/*.db
+notebooks/mlflow.db
