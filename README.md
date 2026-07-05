@@ -10,8 +10,10 @@ End-to-end ML system analyzing student performance data: exploratory analysis, S
 - **Classification target:** `dropout_risk` (binary, severely imbalanced — ~98% No / ~2% Yes)
 
 Engineered features (built in `01_eda.ipynb`):
-- `wellness_score` — composite of mental health, sleep, stress, exercise
-- `distraction_hours` — social media + Netflix hours combined
+- `wellness_score` — composite of mental health, sleep, stress, exercise. Computed in `01_eda.ipynb`;
+  excluded from model features in `04_feature_engineering.ipynb` due to exact multicollinearity
+  (VIF = inf) with its component columns. See Known Limitations.
+- `distraction_hours` — social media + Netflix hours combined. Same exclusion, same reason.
 - `study_efficiency` — study hours relative to distraction hours
 - `grade_tier` — categorical bucket derived directly from `exam_score`. **Reporting/EDA use only — excluded from all model features via `NON_FEATURE_COLS` in `src/config.py`, since it's a deterministic function of the regression target and would leak.**
 
