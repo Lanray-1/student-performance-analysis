@@ -5,6 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 RAW_DATA_PATH = BASE_DIR / "data" / "raw" / "enhanced_student_habits_performance_dataset.csv"
 PROCESSED_DATA_PATH = BASE_DIR / "data" / "processed" / "cleaned_student_data.csv"
 DB_PATH = BASE_DIR / "data" / "processed" / "students.db"
+MODELS_DIR = BASE_DIR / "models"
 
 TABLE_NAME = "students"
 

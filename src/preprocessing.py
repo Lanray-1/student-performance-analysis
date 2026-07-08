@@ -53,3 +53,15 @@ def transform_features(X: pd.DataFrame, encoder, scaler, numeric_cols: list, cat
 def save_transformers(encoder, scaler, out_dir):
     joblib.dump(encoder, f"{out_dir}/encoder.joblib")
     joblib.dump(scaler, f"{out_dir}/scaler.joblib")
+
+def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    df["wellness_score"] = (
+        df["mental_health_rating"] / 10
+        + df["sleep_hours"] / 12
+        + (10 - df["stress_level"]) / 10
+        + df["exercise_frequency"] / 7
+    ) / 4
+    df["distraction_hours"] = df["social_media_hours"] + df["netflix_hours"]
+    df["study_efficiency"] = df["study_hours_per_day"] / (df["distraction_hours"] + 0.1)
+    return df
