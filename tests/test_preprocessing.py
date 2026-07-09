@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import pytest
 
 from src.config import NON_FEATURE_COLS
 from src.preprocessing import (
@@ -56,7 +55,7 @@ class TestSplitData:
         X, y_reg, y_clf = build_feature_matrix(sample_raw_df)
         X_train, X_test, y_reg_train, y_reg_test, y_clf_train, y_clf_test = split_data(X, y_reg, y_clf)
         assert y_clf_train.sum() + y_clf_test.sum() == y_clf.sum()
-        
+
 
 class TestFitAndTransformFeatures:
     def test_transform_output_has_expected_columns(self, sample_raw_df):
