@@ -7,8 +7,6 @@ env/
 data/raw/*.csv
 data/processed/*.csv
 mlruns/
-models/*.pkl
-models/*.joblib
 .DS_Store
 data/processed/*.db
 notebooks/mlflow.db
