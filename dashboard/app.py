@@ -1,7 +1,8 @@
+import os
 import requests
 import streamlit as st
 
-API_URL = "http://localhost:8000"
+API_URL = os.environ.get("API_URL", "http://localhost:8000")
 
 st.title("Student Success Analytics Platform")
 st.write("Predict exam score and dropout risk from student features.")
