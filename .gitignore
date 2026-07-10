@@ -4,7 +4,6 @@ __pycache__/
 venv/
 env/
 .env
-data/raw/*.csv
 data/processed/*.csv
 mlruns/
 .DS_Store
