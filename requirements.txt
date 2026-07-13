@@ -3,7 +3,6 @@ numpy
 scikit-learn==1.7.2
 imbalanced-learn
 xgboost
---extra-index-url https://download.pytorch.org/whl/cpu
 statsmodels
 matplotlib
 seaborn
@@ -14,4 +13,3 @@ uvicorn
 streamlit
 shap
 pytest
-shap
