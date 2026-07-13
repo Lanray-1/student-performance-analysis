@@ -60,6 +60,8 @@ XGBoost's perfect scores in `05_training.ipynb` reflect this dataset property, n
 
 **`exam_score` is dominated almost entirely by `previous_gpa`.** A naive single-feature linear baseline (`previous_gpa` only) achieves RMSE 4.155 / R² 0.870 — XGBoost on the full 56-feature set actually performs *worse* (RMSE 4.301 / R² 0.860), and a full linear model on all features performs nearly identically to the naive baseline (RMSE 4.157 vs 4.155) — no formal significance test was run to confirm this difference is not meaningful. The engineered behavioral features (study habits, wellness, distraction) contribute negligible incremental signal over prior academic performance in this dataset.
 
+**`exam_anxiety_score` is bounded at a minimum of 5, not 0.** The scale doesn't capture a true "no anxiety" floor, so low scores should be read as relatively low rather than an absolute absence of anxiety.
+
 ## Setup
 
 ```bash

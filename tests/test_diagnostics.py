@@ -171,7 +171,7 @@ class TestFeatureAblation:
         noise_delta = result[result["ablated_group"] == "noise"]["rmse_delta"].iloc[0]
         assert dominant_delta > noise_delta
 
-    def test_sorted_descending_by_delta(self, linear_data):
+    def test_baseline_pinned_first(self, linear_data):
         X, y = linear_data
         n = len(X)
         split = int(n * 0.8)
@@ -182,4 +182,21 @@ class TestFeatureAblation:
             LinearRegression, X_train, y_train, X_test, y_test,
             feature_groups={"a": ["x1"], "b": ["x2"], "c": ["x3"]},
         )
-        assert result["rmse_delta"].is_monotonic_decreasing
+        # Baseline row must always be first, regardless of whether any ablated
+        # group's delta is negative (i.e. removing it slightly helped).
+        assert result.iloc[0]["ablated_group"] == "(none — full model)"
+
+    def test_ablated_rows_sorted_descending_by_delta(self, linear_data):
+        X, y = linear_data
+        n = len(X)
+        split = int(n * 0.8)
+        X_train, X_test = X.iloc[:split], X.iloc[split:]
+        y_train, y_test = y.iloc[:split], y.iloc[split:]
+
+        result = feature_ablation(
+            LinearRegression, X_train, y_train, X_test, y_test,
+            feature_groups={"a": ["x1"], "b": ["x2"], "c": ["x3"]},
+        )
+        # Everything after the pinned baseline row should be sorted by impact.
+        ablated_deltas = result.iloc[1:]["rmse_delta"]
+        assert ablated_deltas.is_monotonic_decreasing

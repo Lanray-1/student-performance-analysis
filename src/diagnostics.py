@@ -104,4 +104,8 @@ def feature_ablation(model_fn, X_train, y_train, X_test, y_test, feature_groups:
 
         rows.append({"ablated_group": group_name, "rmse": rmse, "rmse_delta": rmse - full_rmse})
 
-    return pd.DataFrame(rows).sort_values("rmse_delta", ascending=False).reset_index(drop=True)
+    # Keep the full-model baseline pinned as the first row (it's the reference point,
+    # not a ranked result) and sort only the ablated groups by impact below it.
+    baseline_row, ablated_rows = rows[0], rows[1:]
+    ablated_rows.sort(key=lambda r: r["rmse_delta"], reverse=True)
+    return pd.DataFrame([baseline_row] + ablated_rows).reset_index(drop=True)
